@@ -70,7 +70,7 @@ def parse_file( f, points, transform, screen, color ):
 
         elif cmd in ['display', 'save' ]:
             screen = new_screen()
-            draw_lines( points, screen, color )
+            draw_polygons( points, screen, color )
             
             if cmd == 'display':
                 display( screen )

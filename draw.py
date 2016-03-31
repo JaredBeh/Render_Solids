@@ -29,38 +29,38 @@ def add_box( points, x, y, z, width, height, depth ):
     y1 = y - height
     z1 = z - depth
 
+    add_polygon( points,
+                 x, y,  z, 
+                 x, y1, z,
+                 x1, y, z)
     add_polygon( points, 
-              x, y,  z, 
-              x, y1, z,
-              x1, y, z)
+                 x, y1, z, 
+                 x1,y1, z,
+                 x1, y, z)
     add_polygon( points, 
-              x, y1, z, 
-              x1,y1, z,
-              x1, y, z)
+                 x1, y, z, 
+                 x1,y1, z,
+                 x1, y,z1)
     add_polygon( points, 
-              x1, y, z, 
-              x1,y1, z,
-              x1, y,z1)
+                 x1,y1, z, 
+                 x1,y1, z1,
+                 x1, y, z1)
     add_polygon( points, 
-              x1,y1, z, 
-              x1,y1, z1,
-              x1, y, z1)
+                 x, y, z1, 
+                 x1, y,z1,
+                 x1,y1,z1)
     add_polygon( points, 
-              x, y, z1, 
-              x1, y,z1,
-              x1,y1,z1)
+                 x, y, z1, 
+                 x1,y1,z1,
+                 x, y1,z1)
     add_polygon( points, 
-              x, y, z1, 
-              x1,y1,z1,
-              x, y1,z1)
+                 x, y, z, 
+                 x, y,z1,
+                 x,y1, z)
     add_polygon( points, 
-              x, y, z, 
-              x, y,z1,
-              x,y1, z)
-    add_polygon( points, 
-              x, y,z1, 
-              x,y1,z1,
-              x,y1, z)
+                 x, y,z1, 
+                 x,y1,z1,
+                 x,y1, z)
     add_polygon( points,
                  x, y, z,
                  x1,y, z,
@@ -86,17 +86,41 @@ def add_sphere( points, cx, cy, cz, r, step ):
     generate_sphere( temp, cx, cy, cz, r, step )
 
     lat = 0
-    lat_stop = num_steps
+    lat_stop = num_steps - 1
     longt = 0
-    longt_stop = num_steps
+    longt_stop = num_steps - 1
     
     while lat < lat_stop:
         longt = 0
         while longt < longt_stop:
-            
-            index = lat * num_steps + longt            
-            add_edge( points, temp[index][0], temp[index][1], temp[index][2], temp[index][0], temp[index][1], temp[index][2] )
-            
+            index = lat * num_steps + longt
+            if (lat == 0):
+                add_polygon( points, temp[index][0], temp[index][1],
+                             temp[index][0],
+                             temp[-1 * num_steps + index][0], temp[-1 * num_steps + index][1],
+                             temp[-1 * num_steps + index][2],
+                             temp[-1 * num_steps + index + 1][0],
+                             temp[-1 * num_steps + index + 1][1],
+                             temp[-1 * num_steps + index + 1][2])
+                add_polygon( points, temp[index][0], temp[index][1],
+                             temp[index][0],
+                             temp[-1 * num_steps + index + 1][0],
+                             temp[-1 * num_steps + index + 1][1],
+                             temp[-1 * num_steps + index + 1][2],
+                             temp[index + 1][0], temp[index + 1][1],
+                             temp[index + 1][2])
+            add_polygon( points, temp[index][0], temp[index][1],
+                         temp[index][2],
+                         temp[index + num_steps + 1][0], temp[index + num_steps + 1][1],
+                         temp[index + num_steps + 1][2],
+                         temp[index + num_steps][0], temp[index + num_steps][1],
+                         temp[index + num_steps][2])
+            add_polygon(points, temp[index][0], temp[index][1],
+                         temp[index][2],
+                         temp[index + 1][0], temp[index + 1][1],
+                         temp[index + 1][2],
+                         temp[index + num_steps + 1][0], temp[index + num_steps + 1][1],
+                         temp[index + num_steps + 1][2])
             longt+= 1
         lat+= 1
 
@@ -113,9 +137,9 @@ def generate_sphere( points, cx, cy, cz, r, step ):
         while circle < circ_stop:
             
             circ = float(circle) / MAX_STEPS
-            x = r * math.cos( 2 * math.pi * circ ) + cx
-            y = r * math.sin( 2 * math.pi * circ ) * math.cos( 2 * math.pi * rot ) + cy
-            z = r * math.sin( 2 * math.pi * circ ) * math.sin( 2 * math.pi * rot ) + cz
+            x = r * math.cos( math.pi * circ ) + cx
+            y = r * math.sin( math.pi * circ ) * math.cos( 2 * math.pi * rot ) + cy
+            z = r * math.sin( math.pi * circ ) * math.sin( 2 * math.pi * rot ) + cz
             
             add_point( points, x, y, z )
 
@@ -130,16 +154,27 @@ def add_torus( points, cx, cy, cz, r0, r1, step ):
     generate_torus( temp, cx, cy, cz, r0, r1, step )
 
     lat = 0
-    lat_stop = num_steps
+    lat_stop = num_steps - 1
     longt = 0
-    longt_stop = num_steps
+    longt_stop = num_steps - 1
     
     while lat < lat_stop:
         longt = 0
         while longt < longt_stop:
             
             index = lat * num_steps + longt
-            add_edge( points, temp[index][0], temp[index][1], temp[index][2], temp[index][0], temp[index][1], temp[index][2] )
+            add_polygon( points, temp[index][0], temp[index][1],
+                         temp[index][2],
+                         temp[index + num_steps + 1][0], temp[index + num_steps + 1][1],
+                         temp[index + num_steps + 1][2],
+                         temp[index + num_steps][0], temp[index + num_steps][1],
+                         temp[index + num_steps][2])
+            add_polygon(points, temp[index][0], temp[index][1],
+                         temp[index][2],
+                         temp[index + 1][0], temp[index + 1][1],
+                         temp[index + 1][2],
+                         temp[index + num_steps + 1][0], temp[index + num_steps + 1][1],
+                         temp[index + num_steps + 1][2])
             
             longt+= 1
         lat+= 1
