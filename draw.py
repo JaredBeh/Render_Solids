@@ -94,21 +94,6 @@ def add_sphere( points, cx, cy, cz, r, step ):
         longt = 0
         while longt < longt_stop:
             index = lat * num_steps + longt
-            if (lat == 0):
-                add_polygon( points, temp[index][0], temp[index][1],
-                             temp[index][0],
-                             temp[-1 * num_steps + index][0], temp[-1 * num_steps + index][1],
-                             temp[-1 * num_steps + index][2],
-                             temp[-1 * num_steps + index + 1][0],
-                             temp[-1 * num_steps + index + 1][1],
-                             temp[-1 * num_steps + index + 1][2])
-                add_polygon( points, temp[index][0], temp[index][1],
-                             temp[index][0],
-                             temp[-1 * num_steps + index + 1][0],
-                             temp[-1 * num_steps + index + 1][1],
-                             temp[-1 * num_steps + index + 1][2],
-                             temp[index + 1][0], temp[index + 1][1],
-                             temp[index + 1][2])
             add_polygon( points, temp[index][0], temp[index][1],
                          temp[index][2],
                          temp[index + num_steps + 1][0], temp[index + num_steps + 1][1],
@@ -123,7 +108,23 @@ def add_sphere( points, cx, cy, cz, r, step ):
                          temp[index + num_steps + 1][2])
             longt+= 1
         lat+= 1
+    longt = 0
+    while(longt < longt_stop):
 
+            add_polygon( points, temp[longt][0], temp[longt][1],
+                         temp[longt][0],
+                         temp[longt - num_steps][0], temp[longt - num_steps][1],
+                         temp[longt - num_steps][2],
+                         temp[longt - num_steps + 1][0],
+                         temp[longt - num_steps + 1][1],
+                         temp[longt - num_steps + 1][2])
+            add_polygon( points, temp[longt][0], temp[longt][1],
+                         temp[longt][0],
+                         temp[longt - num_steps + 1][0],
+                         temp[longt - num_steps + 1][1],
+                         temp[longt - num_steps + 1][2],
+                         temp[longt + 1][0], temp[longt + 1][1],
+temp[longt + 1][2])
 def generate_sphere( points, cx, cy, cz, r, step ):
 
     rotation = 0
