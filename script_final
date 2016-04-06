@@ -1,0 +1,45 @@
+#test box mesh
+box
+0 0 0 200 100 350
+ident
+#xrotate
+#20
+yrotate
+30
+translate
+65 200 0
+apply
+#display
+ident
+sphere
+0 0 25
+ident
+translate
+-250 -250 0
+xrotate
+-60
+yrotate
+20
+zrotate
+70
+translate
+250 250 0
+apply
+torus
+0 0 25 150
+display
+#reset torus, rotate to make it look cool
+ident
+translate
+-250 -250 0
+xrotate
+-60
+yrotate
+20
+translate
+250 250 0
+apply
+display
+apply
+display
+quit

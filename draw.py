@@ -3,7 +3,7 @@ from matrix import *
 import math
 
 MAX_STEPS = 100
-
+v = [0,0,-1]
 def add_polygon( points, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
     add_point(points,x0,y0,z0)
     add_point(points,x1,y1,z1)
@@ -11,15 +11,25 @@ def add_polygon( points, x0, y0, z0, x1, y1, z1, x2, y2, z2 ):
 
 def draw_polygons( points, screen, color ):
     for n in range(0,len(points),3):
-        draw_line(screen,
-                  points[n][0],points[n][1],
-                  points[n+1][0],points[n+1][1],
-                  color)
-        draw_line(screen,
+        a = [points[n + 1][0] - points[n][0],
+             points[n + 1][1] - points[n][1],
+             points[n + 1][2] - points[n][2] ]
+        b = [points[n + 2][0] - points[n][0],
+             points[n + 2][1] - points[n][1],
+             points[n + 2][2] - points[n][2] ]
+        n = [a[1] * b[2] - a[2] * b[1],
+             a[2] * b[0] - a[0] * b[2],
+             a[0] * b[1] - a[1] * b[0] ]
+        if( 0 > (n[0] * v[0] + n[1] * v[1] + n[2] * v[2])):
+            draw_line(screen,
+                      points[n][0],points[n][1],
+                      points[n+1][0],points[n+1][1],
+                      color)
+            draw_line(screen,
                   points[n][0],points[n][1],
                   points[n+2][0],points[n+2][1],
                   color)
-        draw_line(screen,
+            draw_line(screen,
                   points[n+2][0],points[n+2][1],
                   points[n+1][0],points[n+1][1],
                   color)
