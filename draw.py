@@ -17,22 +17,22 @@ def draw_polygons( points, screen, color ):
         b = [points[n + 2][0] - points[n][0],
              points[n + 2][1] - points[n][1],
              points[n + 2][2] - points[n][2] ]
-        n = [a[1] * b[2] - a[2] * b[1],
+        norm = [a[1] * b[2] - a[2] * b[1],
              a[2] * b[0] - a[0] * b[2],
              a[0] * b[1] - a[1] * b[0] ]
-        if( 0 > (n[0] * v[0] + n[1] * v[1] + n[2] * v[2])):
+        if( 0 > (norm[0] * v[0] + norm[1] * v[1] + norm[2] * v[2])):
             draw_line(screen,
                       points[n][0],points[n][1],
                       points[n+1][0],points[n+1][1],
                       color)
             draw_line(screen,
-                  points[n][0],points[n][1],
-                  points[n+2][0],points[n+2][1],
-                  color)
+                      points[n][0],points[n][1],
+                      points[n+2][0],points[n+2][1],
+                      color)
             draw_line(screen,
-                  points[n+2][0],points[n+2][1],
-                  points[n+1][0],points[n+1][1],
-                  color)
+                      points[n+2][0],points[n+2][1],
+                      points[n+1][0],points[n+1][1],
+                      color)
 
 def add_box( points, x, y, z, width, height, depth ):
     x1 = x + width
