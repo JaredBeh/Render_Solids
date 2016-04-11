@@ -21,6 +21,7 @@ def draw_polygons( points, screen, color ):
              a[2] * b[0] - a[0] * b[2],
              a[0] * b[1] - a[1] * b[0] ]
         if( 0 > (norm[0] * v[0] + norm[1] * v[1] + norm[2] * v[2])):
+        #if(norm[2] > 0):
             draw_line(screen,
                       points[n][0],points[n][1],
                       points[n+1][0],points[n+1][1],
@@ -81,12 +82,12 @@ def add_box( points, x, y, z, width, height, depth ):
                  x, y, z1)
     add_polygon( points,
                  x, y1, z,
-                 x1,y1, z,
-                 x, y1,z1)
+                 x, y1,z1,
+                 x1,y1, z)
     add_polygon( points,
                  x1,y1, z,
-                 x1,y1,z1,
-                 x, y1, z1)
+                 x, y1, z1,
+                 x1,y1,z1)
     
 def add_sphere( points, cx, cy, cz, r, step ):
     
